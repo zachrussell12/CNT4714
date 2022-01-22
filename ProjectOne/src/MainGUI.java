@@ -17,7 +17,7 @@ public class MainGUI {
 
     public static void initializeWindow(JFrame store){
         store.setSize(700,400);
-        store.setLocation(500,500);
+        store.setLocation(500,250);
 
         store.setLayout(new BorderLayout());
 
@@ -49,12 +49,13 @@ public class MainGUI {
 
     private static void createCenterScreen(JPanel centralScreen, int counter, JPanel bottomBar, InventoryItem[] inventoryList, List<String> order) {
 
+        final double[] orderTotal = {0.0};
+
         JLabel itemIDLabel = new JLabel("Enter item ID for Item #" + counter);
         JTextField itemIDField = new JTextField(10);
 
         JLabel quantityLabel = new JLabel("Enter quantity for Item #" + counter);
         JTextField quantityField = new JTextField(10);
-        quantityField.setText("1");
 
         JLabel detailsLabel = new JLabel("Details for Item #" + counter);
         JTextField detailsField = new JTextField(65);
@@ -85,16 +86,6 @@ public class MainGUI {
                 if(itemIDField.getText().equals("")){
                     bottomBar.getComponent(1).setEnabled(false);
                     bottomBar.getComponent(0).setEnabled(true);
-                    detailsField.setText("");
-                }
-                else{
-                    if(!(quantityField.getText().equals(""))) {
-                        bottomBar.getComponent(1).setEnabled(true);
-                    }
-                    else{
-                        bottomBar.getComponent(1).setEnabled(false);
-                        bottomBar.getComponent(0).setEnabled(true);
-                    }
                 }
             }
         });
@@ -121,16 +112,7 @@ public class MainGUI {
             public void disableEnable(){
                 if(itemIDField.getText().equals("")){
                     bottomBar.getComponent(1).setEnabled(false);
-                    quantityField.setText("1");
-                }
-                else{
-                    if(!(itemIDField.getText().equals(""))) {
-                        bottomBar.getComponent(1).setEnabled(true);
-                    }
-                    else{
-                        bottomBar.getComponent(1).setEnabled(false);
-                        bottomBar.getComponent(0).setEnabled(true);
-                    }
+                    bottomBar.getComponent(0).setEnabled(true);
                 }
             }
         });
@@ -156,13 +138,24 @@ public class MainGUI {
                     if(inventoryList[i].itemId.equals(itemIDField.getText())){
                         //System.out.println("Printing out details:");
                         //System.out.println(inventoryList[i].itemId + " " + inventoryList[i].itemName + " " + inventoryList[i].itemInStock + " $" + df.format(inventoryList[i].itemPrice));
-                        String discount = getDiscount(quantityField);
-                        detailsField.setText(inventoryList[i].itemId + " " + inventoryList[i].itemName + " " + inventoryList[i].itemInStock + " " + discount + " $" + df.format(inventoryList[i].itemPrice));
-                        bottomBar.getComponent(0).setEnabled(false);
-                        break;
-                    }
-                    else{
-                        counter++;
+                        if(inventoryList[i].itemInStock == true){
+                            String discount = getDiscount(quantityField);
+                            detailsField.setText(inventoryList[i].itemId + " " + inventoryList[i].itemName + " " + inventoryList[i].itemInStock + " " + discount + " $" + df.format(inventoryList[i].itemPrice));
+                            bottomBar.getComponent(0).setEnabled(false);
+                            bottomBar.getComponent(1).setEnabled(true);
+                            break;
+                        }
+                        else{
+                            System.out.println(inventoryList[i].itemInStock);
+                            NoStock OOS = new NoStock();
+                            itemIDField.setText("");
+                            quantityField.setText("");
+                            if(!(detailsField.getText().equals(""))){
+                                detailsField.setText("");
+                            }
+                            break;
+                        }
+
                     }
                 }
 
@@ -194,21 +187,21 @@ public class MainGUI {
 
         bottomBar.getComponent(1).addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(MouseEvent e){
 
                 final DecimalFormat df = new DecimalFormat("#.00");
 
                 for(int i = 0; i < inventoryList.length; i++){
                     if(inventoryList[i].itemId.equals(itemIDField.getText()) && inventoryList[i].itemInStock == true){
                         String discount = getDiscount(quantityField);
-                        order.add(inventoryList[i].itemId + " " + inventoryList[i].itemName + " " + inventoryList[i].itemInStock + " " + discount + " $" + df.format(inventoryList[i].itemPrice));
+                        String total = getItemTotal(quantityField.getText(), inventoryList[i].itemPrice, discount, df);
+                        order.add(counter + ". " + inventoryList[i].itemId + " " + inventoryList[i].itemName + " " + inventoryList[i].itemInStock + " $" + df.format(inventoryList[i].itemPrice) + " " + quantityField.getText() + " " + discount + " $" + total);
+                        orderTotal[0] += Double.parseDouble(total);
+                        bottomBar.getComponent(1).setEnabled(false);
                         itemIDField.setText("");
                         quantityField.setText("");
-                        break;
-                    }
-                    else{
-                        //System.out.println("Sorry that item is out of stock.");
-                        NoStock OOS = new NoStock();
+                        subtotalField.setText("$" + String.valueOf(df.format(orderTotal[0])));
+                        enableView(bottomBar);
                         break;
                     }
                 }
@@ -262,6 +255,60 @@ public class MainGUI {
             }
         });
 
+        bottomBar.getComponent(4).addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                orderTotal[0] = 0.0;
+                order.clear();
+                itemIDField.setText("");
+                quantityField.setText("");
+                detailsField.setText("");
+                subtotalField.setText("");
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+    }
+
+    private static void enableView(JPanel bottomBar){
+        if(!(bottomBar.getComponent(2).isEnabled())){
+            //System.out.println("Already on");
+            bottomBar.getComponent(2).setEnabled(true);
+        }
+        if(!(bottomBar.getComponent(3).isEnabled())){
+            bottomBar.getComponent(3).setEnabled(true);
+        }
+        return;
+        //System.out.println("Turning button on");
+    }
+    
+    private static String getItemTotal(String quantity, double price, String discount, DecimalFormat df){
+
+        discount = discount.replace("%", "");
+        discount = "0." + discount;
+
+        double disc = Double.parseDouble(discount);
+
+        String s = String.valueOf(df.format(((Integer.parseInt(quantity) * price))-((Integer.parseInt(quantity) * price)*disc)));
+        return s;
     }
 
     private static InventoryItem[] openInventory(){

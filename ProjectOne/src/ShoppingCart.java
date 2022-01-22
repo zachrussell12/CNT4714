@@ -1,6 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
+import java.util.Vector;
 
 public class ShoppingCart {
 
@@ -15,8 +18,8 @@ public class ShoppingCart {
     public void showCart(){
         JFrame orderPopUp = new JFrame("E-Stores R' Us - Shopping Cart");
 
-        orderPopUp.setSize(400,400);
-        orderPopUp.setLocation(500,500);
+        orderPopUp.setSize(500,400);
+        orderPopUp.setLocation(500,250);
 
         orderPopUp.setLayout(new BorderLayout());
 
@@ -28,16 +31,66 @@ public class ShoppingCart {
             orderPopUp.add(noItems);
         }
         else{
-            StringBuilder list = new StringBuilder();
 
-            for(int i = 0; i < this.cart.size(); i++){
-                list.append(i + 1).append(". ").append(this.cart.get(i)).append('\n');
-            }
+            JPanel cart = new JPanel();
 
-            JLabel orderList = new JLabel(list.toString());
+            //StringBuilder list = new StringBuilder();
 
-            orderPopUp.add(orderList);
+            JList list = new JList(this.cart.toArray());
+
+            list.setBounds(100,0,400,400);
+
+            list.setAlignmentY(Component.CENTER_ALIGNMENT);
+            list.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            cart.setAlignmentX(Component.CENTER_ALIGNMENT);
+            cart.setAlignmentY(Component.CENTER_ALIGNMENT);
+
+            cart.add(list);
+
+            JButton close = new JButton("Okay");
+            close.setPreferredSize(new Dimension(75,25));
+
+            cart.add(close);
+
+            close.setVerticalAlignment(SwingConstants.BOTTOM);
+
+            /*for(int i = 0; i < this.cart.size(); i++){
+                JLabel newLabel = new JLabel((i + 1) + ". " + this.cart.get(i));
+                cart.add(newLabel);
+            }*/
+
+            close.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    orderPopUp.dispose();
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
+
+            orderPopUp.add(cart);
         }
+
+
 
         orderPopUp.setVisible(true);
     }
