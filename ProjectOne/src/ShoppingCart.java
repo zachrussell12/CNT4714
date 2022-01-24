@@ -19,7 +19,7 @@ public class ShoppingCart {
         JFrame orderPopUp = new JFrame("E-Stores R' Us - Shopping Cart");
 
         orderPopUp.setSize(500,400);
-        orderPopUp.setLocation(500,250);
+        orderPopUp.setLocation(660,383);
 
         orderPopUp.setLayout(new BorderLayout());
 

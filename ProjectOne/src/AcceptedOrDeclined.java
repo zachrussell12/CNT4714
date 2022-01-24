@@ -2,16 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.List;
 
-public class NoStock {
+public class AcceptedOrDeclined {
 
-    public NoStock() {
-        showNoStock();
+    public AcceptedOrDeclined(boolean choice, String id) {
+        displayChoicePopUp(choice, id);
     }
 
-    public void showNoStock(){
-        JFrame orderPopUp = new JFrame("E-Stores R' Us - Out of Stock");
+    private static void displayChoicePopUp(boolean choice, String id){
+
+        JFrame orderPopUp = new JFrame("E-Stores R' Us - Item Status");
 
         orderPopUp.setSize(400,150);
         orderPopUp.setLocation(660,383);
@@ -24,11 +24,25 @@ public class NoStock {
 
         labelContainer.add(emptyLine2);
 
-        JLabel noStockText = new JLabel("|      Sorry... that item is out of stock, please try another item.      |");
+        if(choice){
+            System.out.println("Item found and added to cart");
 
-        noStockText.setHorizontalAlignment(SwingConstants.CENTER);
+            JLabel noStockText = new JLabel("|         Item #" + id +" accepted. Added to your cart.         |");
 
-        labelContainer.add(noStockText);
+            noStockText.setHorizontalAlignment(SwingConstants.CENTER);
+
+            labelContainer.add(noStockText);
+
+        }
+        else{
+            System.out.println("Item not found. Try again.");
+
+            JLabel noStockText = new JLabel("|      Item #" + id +" was not found, please try another item.      |");
+
+            noStockText.setHorizontalAlignment(SwingConstants.CENTER);
+
+            labelContainer.add(noStockText);
+        }
 
         JLabel emptyLine = new JLabel("----------------------------------------------------------------------------------------");
 
@@ -73,5 +87,8 @@ public class NoStock {
         });
 
         orderPopUp.setVisible(true);
+
     }
+
+
 }

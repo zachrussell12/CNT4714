@@ -133,7 +133,7 @@ public class MainGUI {
             public void mouseClicked(MouseEvent e) {
                 //System.out.println(itemIDField.getText());
                 final DecimalFormat df = new DecimalFormat("#.00");
-                int counter = 0;
+                int check = 0;
                 for(int i = 0; i < inventoryList.length; i++){
                     if(inventoryList[i].itemId.equals(itemIDField.getText())){
                         //System.out.println("Printing out details:");
@@ -157,10 +157,13 @@ public class MainGUI {
                         }
 
                     }
+                    check++;
                 }
 
-                if(counter == inventoryList.length){
-                    System.out.println("item was not found!");
+                if(check == inventoryList.length){
+                    AcceptedOrDeclined display = new AcceptedOrDeclined(false, itemIDField.getText());
+                    itemIDField.setText("");
+                    quantityField.setText("");
                 }
             }
 
@@ -201,6 +204,7 @@ public class MainGUI {
                         itemIDField.setText("");
                         quantityField.setText("");
                         subtotalField.setText("$" + String.valueOf(df.format(orderTotal[0])));
+                        AcceptedOrDeclined display = new AcceptedOrDeclined(true, inventoryList[i].itemId);
                         enableView(bottomBar);
                         break;
                     }
@@ -232,6 +236,33 @@ public class MainGUI {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ShoppingCart window = new ShoppingCart(order);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
+        bottomBar.getComponent(3).addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                FinalInvoice orderFinished = new FinalInvoice(order, orderTotal);
             }
 
             @Override
@@ -385,5 +416,32 @@ public class MainGUI {
         createCenterScreen(centralScreen, counter, bottomBar, inventory, order);
 
         store.getContentPane().add(BorderLayout.CENTER, centralScreen);
+
+        bottomBar.getComponent(5).addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                store.dispose();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
     }
 }
