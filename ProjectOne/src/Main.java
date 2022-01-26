@@ -6,25 +6,23 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Stack;
 
-public class MainGUI {
+public class Main {
 
     public static void initializeWindow(JFrame store){
         store.setSize(700,400);
         store.setLocation(500,250);
 
-        store.setLayout(new BorderLayout());
+        //store.setLayout(new BorderLayout());
 
         store.setVisible(true);
     }
 
-    private static void createBottomBar(JPanel bottomBar, List<String> order){
+    private static void createBottomBar(JPanel bottomBar, java.util.List<String> order){
 
 
         JButton button1 = new JButton("Process Item #" + (order.size()+1));
@@ -47,21 +45,29 @@ public class MainGUI {
 
     }
 
-    private static void createCenterScreen(JPanel centralScreen, int counter, JPanel bottomBar, InventoryItem[] inventoryList, List<String> order) {
+    private static void createCenterScreen(JPanel centralScreen, int counter, JPanel bottomBar, InventoryItem[] inventoryList, java.util.List<String> order) {
 
         final double[] orderTotal = {0.0};
 
-        JLabel itemIDLabel = new JLabel("Enter item ID for Item #" + counter);
+        JLabel itemIDLabel = new JLabel("Enter item ID for Item #" + (order.size()+1));
         JTextField itemIDField = new JTextField(10);
+        itemIDField.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.DARK_GRAY));
 
-        JLabel quantityLabel = new JLabel("Enter quantity for Item #" + counter);
+
+        JLabel quantityLabel = new JLabel("Enter quantity for Item #" + (order.size()+1));
         JTextField quantityField = new JTextField(10);
+        quantityField.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.DARK_GRAY));
 
-        JLabel detailsLabel = new JLabel("Details for Item #" + counter);
+        JLabel detailsLabel = new JLabel("Details for Item #" + (order.size()+1));
         JTextField detailsField = new JTextField(65);
+        detailsField.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.DARK_GRAY));
+        detailsField.setDisabledTextColor(Color.black);
 
-        JLabel subtotalLabel = new JLabel("Order subtotal for " + (counter-1) + " item(s)");
+
+        JLabel subtotalLabel = new JLabel("Order subtotal for " + (order.size()) + " item(s)");
         JTextField subtotalField = new JTextField(10);
+        subtotalField.setDisabledTextColor(Color.black);
+        subtotalField.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.DARK_GRAY));
 
         centralScreen.add(itemIDLabel);
         centralScreen.add(itemIDField);
@@ -114,6 +120,13 @@ public class MainGUI {
                     bottomBar.getComponent(1).setEnabled(false);
                     bottomBar.getComponent(0).setEnabled(true);
                 }
+                else{
+                    if(bottomBar.getComponent(0).isEnabled() == false){bottomBar.getComponent(1).setEnabled(true);}
+                }
+
+                if(!(quantityField.getText().equals(""))){
+                    quantityField.setBorder(BorderFactory.createMatteBorder(1,1,1,1, Color.DARK_GRAY));
+                }
             }
         });
 
@@ -142,7 +155,12 @@ public class MainGUI {
                             String discount = getDiscount(quantityField);
                             detailsField.setText(inventoryList[i].itemId + " " + inventoryList[i].itemName + " " + inventoryList[i].itemInStock + " " + discount + " $" + df.format(inventoryList[i].itemPrice));
                             bottomBar.getComponent(0).setEnabled(false);
-                            bottomBar.getComponent(1).setEnabled(true);
+                            if(!(quantityField.getText().equals(""))) {
+                                bottomBar.getComponent(1).setEnabled(true);
+                            }
+                            else{
+                                quantityField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.red));
+                            }
                             break;
                         }
                         else{
@@ -206,6 +224,7 @@ public class MainGUI {
                         subtotalField.setText("$" + String.valueOf(df.format(orderTotal[0])));
                         AcceptedOrDeclined display = new AcceptedOrDeclined(true, inventoryList[i].itemId);
                         enableView(bottomBar);
+                        increaseOrderSize(itemIDLabel, quantityLabel, detailsLabel, subtotalLabel, order.size());
                         break;
                     }
                 }
@@ -295,6 +314,13 @@ public class MainGUI {
                 quantityField.setText("");
                 detailsField.setText("");
                 subtotalField.setText("");
+                itemIDLabel.setText("Enter item ID for Item #" + (order.size()+1));
+                quantityLabel.setText("Enter quantity for Item #" + (order.size()+1));
+                detailsLabel.setText("Details for Item #" + (order.size()+1));
+                subtotalLabel.setText("Order subtotal for " + (order.size()) + " item(s)");
+                bottomBar.getComponent(1).setEnabled(false);
+                bottomBar.getComponent(2).setEnabled(false);
+                bottomBar.getComponent(3).setEnabled(false);
             }
 
             @Override
@@ -319,6 +345,13 @@ public class MainGUI {
         });
     }
 
+    private static void increaseOrderSize(JLabel fieldOne, JLabel fieldTwo, JLabel fieldThree, JLabel fieldFour, int size){
+        fieldOne.setText("Enter item ID for Item #" + (size+1) + ":");
+        fieldTwo.setText("Enter quantity for Item #" + (size+1) + ":");
+        fieldThree.setText("Details for Item #" + (size+1) + ":");
+        fieldFour.setText("Order subtotal for " + size + " item(s):");
+    }
+
     private static void enableView(JPanel bottomBar){
         if(!(bottomBar.getComponent(2).isEnabled())){
             //System.out.println("Already on");
@@ -330,7 +363,7 @@ public class MainGUI {
         return;
         //System.out.println("Turning button on");
     }
-    
+
     private static String getItemTotal(String quantity, double price, String discount, DecimalFormat df){
 
         discount = discount.replace("%", "");
@@ -396,8 +429,8 @@ public class MainGUI {
     public static void main(String[] args){
 
         JFrame store = new JFrame("E-Stores R' Us");
-        int counter = 1;
         List<String> order = new ArrayList<>();
+        int counter = 1;
 
         initializeWindow(store);
 
@@ -411,11 +444,12 @@ public class MainGUI {
         store.getContentPane().add(BorderLayout.SOUTH, bottomBar);
 
         JPanel centralScreen = new JPanel();
-        centralScreen.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        centralScreen.setLayout(new BoxLayout(centralScreen, BoxLayout.Y_AXIS));
 
         createCenterScreen(centralScreen, counter, bottomBar, inventory, order);
 
-        store.getContentPane().add(BorderLayout.CENTER, centralScreen);
+        store.getContentPane().add(BorderLayout.NORTH, centralScreen);
 
         bottomBar.getComponent(5).addMouseListener(new MouseListener() {
             @Override

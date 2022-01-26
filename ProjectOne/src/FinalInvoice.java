@@ -23,18 +23,25 @@ public class FinalInvoice {
 
         JFrame finalInvoiceFrame = new JFrame("E-Stores R' Us - Final Invoice");
 
-        finalInvoiceFrame.setSize(700,1000);
-        finalInvoiceFrame.setLocation(660,383);
+        finalInvoiceFrame.setSize(400,500);
+        finalInvoiceFrame.setLocation(660,250);
 
         finalInvoiceFrame.setLayout(new BorderLayout());
 
         JPanel labelContainer = new JPanel();
+
+        BoxLayout layout = new BoxLayout(labelContainer, BoxLayout.Y_AXIS);
+
+        labelContainer.setLayout(layout);
+
 
         Date today = new Date();
 
         JLabel date = new JLabel("Date: " + today.toString());
 
         labelContainer.add(date);
+
+
 
         JLabel lineItems = new JLabel("Number of line items: " + this.finalOrder.size());
 
@@ -50,8 +57,8 @@ public class FinalInvoice {
 
         list.setBounds(100,0,400,400);
 
-        list.setAlignmentY(Component.CENTER_ALIGNMENT);
-        list.setAlignmentX(Component.CENTER_ALIGNMENT);
+        list.setAlignmentY(Component.LEFT_ALIGNMENT);
+        list.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         labelContainer.add(list);
 
@@ -88,7 +95,7 @@ public class FinalInvoice {
 
         labelContainer.add(close);
 
-        finalInvoiceFrame.add(labelContainer);
+        finalInvoiceFrame.getContentPane().add(BorderLayout.NORTH, labelContainer);
 
         close.setHorizontalAlignment(SwingConstants.CENTER);
 
