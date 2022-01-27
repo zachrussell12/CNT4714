@@ -1,3 +1,9 @@
+/*  Name:  Zachary Russell
+     Course: CNT 4714 – Spring 2022
+     Assignment title: Project 1 – Event-driven Enterprise Simulation
+     Date: Sunday January 30, 2022
+*/
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -6,8 +12,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -22,7 +35,7 @@ public class Main {
         store.setVisible(true);
     }
 
-    private static void createBottomBar(JPanel bottomBar, java.util.List<String> order){
+    private static JButton[] createBottomBar(JPanel bottomBar, java.util.List<String> order){
 
 
         JButton button1 = new JButton("Process Item #" + (order.size()+1));
@@ -43,9 +56,16 @@ public class Main {
         button3.setEnabled(false);
         button4.setEnabled(false);
 
+        JButton[] btnArray = new JButton[2];
+
+        btnArray[0] = button1;
+        btnArray[1] = button2;
+
+        return btnArray;
+
     }
 
-    private static void createCenterScreen(JPanel centralScreen, int counter, JPanel bottomBar, InventoryItem[] inventoryList, java.util.List<String> order) {
+    private static void createCenterScreen(JPanel centralScreen, int counter, JPanel bottomBar, InventoryItem[] inventoryList, java.util.List<String> order, JButton[] btns) {
 
         final double[] orderTotal = {0.0};
 
@@ -140,7 +160,6 @@ public class Main {
 
         subtotalField.setEnabled(false);
 
-
         bottomBar.getComponent(0).addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -155,6 +174,7 @@ public class Main {
                             String discount = getDiscount(quantityField);
                             detailsField.setText(inventoryList[i].itemId + " " + inventoryList[i].itemName + " " + inventoryList[i].itemInStock + " " + discount + " $" + df.format(inventoryList[i].itemPrice));
                             bottomBar.getComponent(0).setEnabled(false);
+                            increaseDetailsSize(detailsLabel, order.size());
                             if(!(quantityField.getText().equals(""))) {
                                 bottomBar.getComponent(1).setEnabled(true);
                             }
@@ -164,7 +184,7 @@ public class Main {
                             break;
                         }
                         else{
-                            System.out.println(inventoryList[i].itemInStock);
+                            //System.out.println(inventoryList[i].itemInStock);
                             NoStock OOS = new NoStock();
                             itemIDField.setText("");
                             quantityField.setText("");
@@ -216,7 +236,7 @@ public class Main {
                     if(inventoryList[i].itemId.equals(itemIDField.getText()) && inventoryList[i].itemInStock == true){
                         String discount = getDiscount(quantityField);
                         String total = getItemTotal(quantityField.getText(), inventoryList[i].itemPrice, discount, df);
-                        order.add(counter + ". " + inventoryList[i].itemId + " " + inventoryList[i].itemName + " " + inventoryList[i].itemInStock + " $" + df.format(inventoryList[i].itemPrice) + " " + quantityField.getText() + " " + discount + " $" + total);
+                        order.add((order.size()+1) + ". " + inventoryList[i].itemId + " " + inventoryList[i].itemName + " " + inventoryList[i].itemInStock + " $" + df.format(inventoryList[i].itemPrice) + " " + quantityField.getText() + " " + discount + " $" + total);
                         orderTotal[0] += Double.parseDouble(total);
                         bottomBar.getComponent(1).setEnabled(false);
                         itemIDField.setText("");
@@ -224,7 +244,7 @@ public class Main {
                         subtotalField.setText("$" + String.valueOf(df.format(orderTotal[0])));
                         AcceptedOrDeclined display = new AcceptedOrDeclined(true, inventoryList[i].itemId);
                         enableView(bottomBar);
-                        increaseOrderSize(itemIDLabel, quantityLabel, detailsLabel, subtotalLabel, order.size());
+                        increaseOrderSize(itemIDLabel, quantityLabel, subtotalLabel, order.size(), btns);
                         break;
                     }
                 }
@@ -282,6 +302,9 @@ public class Main {
             @Override
             public void mouseClicked(MouseEvent e) {
                 FinalInvoice orderFinished = new FinalInvoice(order, orderTotal);
+                itemIDField.setEnabled(false);
+                quantityField.setEnabled(false);
+                finishOrder(order);
             }
 
             @Override
@@ -318,9 +341,13 @@ public class Main {
                 quantityLabel.setText("Enter quantity for Item #" + (order.size()+1));
                 detailsLabel.setText("Details for Item #" + (order.size()+1));
                 subtotalLabel.setText("Order subtotal for " + (order.size()) + " item(s)");
+                btns[0].setText("Process Item #1");
+                btns[1].setText("Confirm Item #1");
                 bottomBar.getComponent(1).setEnabled(false);
                 bottomBar.getComponent(2).setEnabled(false);
                 bottomBar.getComponent(3).setEnabled(false);
+                itemIDField.setEnabled(true);
+                quantityField.setEnabled(true);
             }
 
             @Override
@@ -345,11 +372,16 @@ public class Main {
         });
     }
 
-    private static void increaseOrderSize(JLabel fieldOne, JLabel fieldTwo, JLabel fieldThree, JLabel fieldFour, int size){
+    private static void increaseOrderSize(JLabel fieldOne, JLabel fieldTwo, JLabel fieldFour, int size, JButton[] btns){
         fieldOne.setText("Enter item ID for Item #" + (size+1) + ":");
         fieldTwo.setText("Enter quantity for Item #" + (size+1) + ":");
-        fieldThree.setText("Details for Item #" + (size+1) + ":");
         fieldFour.setText("Order subtotal for " + size + " item(s):");
+        btns[0].setText("Process Item #" + (size+1));
+        btns[1].setText("Confirm Item #" + (size+1));
+    }
+
+    private static void increaseDetailsSize(JLabel fieldThree, int size){
+        fieldThree.setText("Details for Item #" + (size+1) + ":");
     }
 
     private static void enableView(JPanel bottomBar){
@@ -402,7 +434,33 @@ public class Main {
         }
 
 
+
+
         return inv;
+    }
+
+    private static void finishOrder(List<String> order){
+
+        try {
+
+            FileWriter transactionOut = new FileWriter("../ProjectOne/src/transactions.txt", true);
+
+            for(int i = 0; i < order.size(); i++){
+                String out = "";
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss 'EST'");
+                DateFormat dfTwo = new SimpleDateFormat("MMddyyyyHHmm");
+                String transactionDate = df.format(new Date());
+                String transactionID =dfTwo.format(new Date());
+                order.set(i, order.get(i).substring(3));
+                out += transactionID + " " + order.get(i) + ", " + transactionDate + "\n";
+                transactionOut.append(out);
+            }
+
+            transactionOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private static String getDiscount(JTextField quantityField){
@@ -435,11 +493,11 @@ public class Main {
         initializeWindow(store);
 
         InventoryItem[] inventory = openInventory();
-        System.out.println(inventory[1].itemName);
+        //System.out.println(inventory[1].itemName);
 
         JPanel bottomBar = new JPanel();
 
-        createBottomBar(bottomBar, order);
+        JButton[] btns = createBottomBar(bottomBar, order);
 
         store.getContentPane().add(BorderLayout.SOUTH, bottomBar);
 
@@ -447,7 +505,7 @@ public class Main {
 
         centralScreen.setLayout(new BoxLayout(centralScreen, BoxLayout.Y_AXIS));
 
-        createCenterScreen(centralScreen, counter, bottomBar, inventory, order);
+        createCenterScreen(centralScreen, counter, bottomBar, inventory, order, btns);
 
         store.getContentPane().add(BorderLayout.NORTH, centralScreen);
 
@@ -455,6 +513,8 @@ public class Main {
             @Override
             public void mouseClicked(MouseEvent e) {
                 store.dispose();
+
+
             }
 
             @Override
