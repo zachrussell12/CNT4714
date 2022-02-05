@@ -1,0 +1,19 @@
+012720221622 14909  "1/4in - 28tpi SS nuts" true $1.00 4 0% $4.00, 01/27/2022 16:22:00 EST
+012720221622 14  "Stanley #2 Philips Screwdriver" true $6.95 5 10% $31.27, 01/27/2022 16:22:00 EST
+012720221622 89476  "Assos T-Evo shorts" true $299.95 6 10% $1619.73, 01/27/2022 16:22:00 EST
+012720221622 8543  "Ritchey 1 inch threaded headset - silver" true $45.00 2 0% $90.00, 01/27/2022 16:22:00 EST
+012720221628 97634  "Campagnolo 12 spd crankset - 53/39 175mm" true $750.00 4 0% $3000.00, 01/27/2022 16:28:50 EST
+012720221628 286934  "1 lb - coffee beans" true $6.50 8 10% $46.80, 01/27/2022 16:28:50 EST
+012720221628 47831  "8x10 picture frame" true $4.95 10 20% $39.60, 01/27/2022 16:28:50 EST
+012720221628 234887  "2021 CSX train calendar" true $12.95 10 20% $103.60, 01/27/2022 16:28:50 EST
+012720221628 198  "Box of 10 Sharpie Roller 0.5mm" true $6.50 2 0% $13.00, 01/27/2022 16:28:50 EST
+012720221631 4762  "HP copy paper ultra white - ream" true $13.50 6 10% $72.90, 01/27/2022 16:31:27 EST
+012720221631 29741  "Plush teddy bear 8 inch" true $24.00 1 0% $24.00, 01/27/2022 16:31:27 EST
+012720221631 582913  "Look Keo 2 Max pedals" true $135.00 8 10% $972.00, 01/27/2022 16:31:27 EST
+012720221631 339921  "Yamaha KT 100 kart engine" true $950.00 1 0% $950.00, 01/27/2022 16:31:27 EST
+012720221632 4499120  "M&Ms dark chocolate w/peanuts - 3oz" true $2.50 3 0% $7.50, 01/27/2022 16:32:43 EST
+012720221632 387  "Brachs butterscotch hard candy - 1 lb" true $4.50 2 0% $9.00, 01/27/2022 16:32:43 EST
+012720221632 23  "Tamiya 2oz paint - ferrari red" true $2.39 2 0% $4.78, 01/27/2022 16:32:43 EST
+012720221632 115693  "Colnago C64 - Mapei frame" true $6500.00 3 0% $19500.00, 01/27/2022 16:32:43 EST
+012720221633 47831  "8x10 picture frame" true $4.95 2 0% $9.90, 01/27/2022 16:33:47 EST
+012720221633 1111  "Top Secret Twenty One - Janet Evanovich" true $8.99 4 0% $35.96, 01/27/2022 16:33:47 EST
