@@ -1,7 +1,16 @@
+/*
+  Name: Zachary Russell
+  Course: CNT 4714 Spring 2022
+  Assignment title: Project 2 – Multi-threaded programming in Java
+  Date:  February 13, 2022
+
+  Class:  CNT 4714 Spring 2022 Section: 0001
+*/
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.concurrent.Executor;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class App {
@@ -52,7 +61,7 @@ public class App {
         for(int i = 0; i < numOfStations; i++){
             stations[i] = new WorkStation(("S" + i), stationBelts[i][0], stationBelts[i][1], workloads[i]);
         }
-        
+
         /*System.out.println("Stations Initialized: ");
         for(int i = 0; i < stations.length; i++){
             System.out.println("Name:" + stations[i].workStation);
@@ -67,32 +76,33 @@ public class App {
         initializeWorkStations();
 
         int totalWorkload = 0;
+        int counter = 0;
 
         System.out.println("* * * * * * * * * * PACKAGE MANAGEMENT FACILITY SIMULATION BEGINNING * * * * * * * * * *");
         System.out.println();
 
         for(int i = 0; i < stations.length; i++){
-            System.out.println("\t\t\t\t\t\tRouting Station " + stations[i].workStation + " has a workload of " + stations[i].assignedWorkload);
+            System.out.println("\t\t\t\t\t\tRouting Station " + stations[i].workStation + " Has Total Workload Of " + stations[i].assignedWorkload);
             totalWorkload += stations[i].assignedWorkload;
         }
 
-        Runnable thread = new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("Runnable");
-            }
-        };
+        ReentrantLock lock = new ReentrantLock();
 
         //System.out.println("Total workload is: " + totalWorkload);
 
-        Executor threadPool = new Executor() {
-            @Override
-            public void execute(Runnable command) {
-                thread.run();
-                System.out.println("hello");
-            }
-        };
+        ExecutorService threadPool = Executors.newFixedThreadPool(stations.length);
 
-        threadPool.execute(thread);
+        while(counter != stations.length) {
+            for (int i = 0; i < stations.length; i++) {
+                threadPool.execute(stations[i]);
+                if (stations[i].workLoadLeft == 0) {
+                    counter++;
+                }
+            }
+        }
+
+        threadPool.shutdownNow();
+        System.out.println("Packing Finished");
+
     }
 }
