@@ -77,7 +77,6 @@ public class App {
         initializeWorkStations();
 
         int totalWorkload = 0;
-        int counter = 0;
 
         System.out.println("* * * * * * * * * * PACKAGE MANAGEMENT FACILITY SIMULATION BEGINNING * * * * * * * * * *");
         System.out.println();
@@ -90,15 +89,22 @@ public class App {
         //System.out.println("Total workload is: " + totalWorkload);
 
         ExecutorService threadPool = Executors.newFixedThreadPool(stations.length);
+        int counter = totalWorkload;
+        int countLeft = 0;
 
-        while(counter != stations.length) {
+        do{
             for (int i = 0; i < stations.length; i++) {
                 threadPool.execute(stations[i]);
-                if (stations[i].workLoadLeft == 0) {
-                    counter++;
+                countLeft = 0;
+                for(int j = 0; j < stations.length; j++){
+                    countLeft += stations[j].workLoadLeft;
+                    //System.out.println(countLeft);
+                    counter = 0;
                 }
+                counter = totalWorkload - countLeft;
+                //System.out.println(counter);
             }
-        }
+        }while((counter != totalWorkload) );
 
         threadPool.shutdownNow();
         /*try {

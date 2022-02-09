@@ -118,41 +118,41 @@ public class Conveyors {
     public void turnBeltOff(String name){
 
         if (name.equals(this.belt[0])) {
-            //if(this.beltOn[0]){System.out.println("\t\t\t\t\t\t\tTurning off belt C0");}
+            //if(this.beltOn[0]){System.out.println("\t\t\t\t\t\t\tTurning off belt C0 and releasing lock.");}
             this.beltOn[0] = false;
         }else if (name.equals(this.belt[1])) {
-            //if(this.beltOn[1]){System.out.println("\t\t\t\t\t\t\tTurning off belt C1");}
+            //if(this.beltOn[1]){System.out.println("\t\t\t\t\t\t\tTurning off belt C1 and releasing lock.");}
             this.beltOn[1] = false;
         }
         else if (name.equals(this.belt[2])) {
-            //if(this.beltOn[2]){System.out.println("\t\t\t\t\t\t\tTurning off belt C2");}
+            //if(this.beltOn[2]){System.out.println("\t\t\t\t\t\t\tTurning off belt C2 and releasing lock.");}
             this.beltOn[2] = false;
         }
         else if (name.equals(this.belt[3])) {
-            //if(this.beltOn[3]){System.out.println("\t\t\t\t\t\t\tTurning off belt C3");}
+            //if(this.beltOn[3]){System.out.println("\t\t\t\t\t\t\tTurning off belt C3 and releasing lock.");}
             this.beltOn[3] = false;
         }
         else if (name.equals(this.belt[4])) {
-            //if(this.beltOn[4]){System.out.println("\t\t\t\t\t\t\tTurning off belt C4");}
+            //if(this.beltOn[4]){System.out.println("\t\t\t\t\t\t\tTurning off belt C4 and releasing lock.");}
             this.beltOn[4] = false;
         }
         else if(name.equals(this.belt[5])) {
-            //if(this.beltOn[5]){System.out.println("\t\t\t\t\t\t\tTurning off belt C5");}
+            //if(this.beltOn[5]){System.out.println("\t\t\t\t\t\t\tTurning off belt C5 and releasing lock.");}
             this.beltOn[5] = false;
         }else if (name.equals(this.belt[6])) {
-            //if(this.beltOn[6]){System.out.println("\t\t\t\t\t\t\tTurning off belt C6");}
+            //if(this.beltOn[6]){System.out.println("\t\t\t\t\t\t\tTurning off belt C6 and releasing lock.");}
             this.beltOn[6] = false;
         }
         else if (name.equals(this.belt[7])) {
-            //if(this.beltOn[7]){System.out.println("\t\t\t\t\t\t\tTurning off belt C7");}
+            //if(this.beltOn[7]){System.out.println("\t\t\t\t\t\t\tTurning off belt C7 and releasing lock.");}
             this.beltOn[7] = false;
         }
         else if (name.equals(this.belt[8])) {
-            //if(this.beltOn[8]){System.out.println("\t\t\t\t\t\t\tTurning off belt C8");}
+            //if(this.beltOn[8]){System.out.println("\t\t\t\t\t\t\tTurning off belt C8 and releasing lock.");}
             this.beltOn[8] = false;
         }
         else if (name.equals(this.belt[9])) {
-            //if(this.beltOn[9]){System.out.println("\t\t\t\t\t\t\tTurning off belt C9");}
+            //if(this.beltOn[9]){System.out.println("\t\t\t\t\t\t\tTurning off belt C9 and releasing lock.");}
             this.beltOn[9] = false;
         }
     }
