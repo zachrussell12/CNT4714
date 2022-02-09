@@ -1,0 +1,96 @@
+* * * * * * * * * * PACKAGE MANAGEMENT FACILITY SIMULATION BEGINNING * * * * * * * * * *
+
+						Routing Station S0 Has Total Workload Of 2
+						Routing Station S1 Has Total Workload Of 3
+						Routing Station S2 Has Total Workload Of 4
+
+% % % % % % % % ROUTING STATION S0 Coming Online - Initializing Conveyors % % % % % % % %
+
+
+% % % % % % % % ROUTING STATION S2 Coming Online - Initializing Conveyors % % % % % % % %
+
+			Routing Station S2: Input conveyor set to conveyor number C1
+
+
+% % % % % % % % ROUTING STATION S1 Coming Online - Initializing Conveyors % % % % % % % %
+
+			Routing Station S1: Input conveyor set to conveyor number C0
+
+			Routing Station S1: Output conveyor set to conveyor number C1
+
+			Routing Station S2: Output conveyor set to conveyor number C2
+
+Routing Station S2: Workload set. Station S2 has a total of 4 package groups to move.
+
+			Routing Station S0: Input conveyor set to conveyor number C2
+
+			Routing Station S0: Output conveyor set to conveyor number C0
+
+Routing Station S0: Workload set. Station S0 has a total of 2 package groups to move.
+
+
+						Routing Station S0: Now Online
+
+
+						Routing Station S2: Now Online
+
+				Station S2 successfully acquired lock on: C1
+
+		Station S2 cannot acquire all locks, releasing lock on: C1
+
+Routing Station S1: Workload set. Station S1 has a total of 3 package groups to move.
+
+
+						Routing Station S1: Now Online
+
+				Station S1 successfully acquired lock on: C0
+
+				Station S1 successfully acquired lock on: C1
+
+		Station S1 cannot acquire all locks, releasing lock on: C0
+
+		Station S1 cannot acquire all locks, releasing lock on: C1
+
+				Station S0 successfully acquired lock on: C2
+
+				Station S0 successfully acquired lock on: C0
+
+* * * * * * Routing Station S0: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+		Station S2 cannot acquire all locks, releasing lock on: C1
+
+* * * * * * Routing Station S1: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+	Routing Station S1: successfully moves package into station on input Conveyor C0
+
+* * * * * * Routing Station S0: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+	Routing Station S0: successfully moves package into station on input Conveyor C2
+
+	Routing Station S0: successfully moves package out of station on output Conveyor C0
+
+	Routing Station S0: successfully moves package into station on input Conveyor C2
+
+	Routing Station S0: successfully moves package out of station on output Conveyor C0
+
+			Routing Station S0 has 1 package group left to move.
+
+	Routing Station S1: successfully moves package out of station on output Conveyor C1
+
+				Routing Station S1 has 2 package groups left to move.
+
+
+
+
+* * Station S0 Workload successfully completed. * * Station: S0 releasing/unlocking belts and going offline. * *
+
+				Routing Station S0 has 0 package groups left to move.
+
+
+
+* * Station S0 Workload successfully completed. * * Station: S0 releasing/unlocking belts and going offline. * *
+
+* * * * * * * * * * ALL WORKLOADS COMPLETE * * * PACKAGE MANAGEMENT FACILITY SIMULATION ENDS * * * * * * * * * *

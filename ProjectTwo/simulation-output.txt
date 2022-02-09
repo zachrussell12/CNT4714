@@ -1,0 +1,419 @@
+* * * * * * * * * * PACKAGE MANAGEMENT FACILITY SIMULATION BEGINNING * * * * * * * * * *
+
+						Routing Station S0 Has Total Workload Of 2
+						Routing Station S1 Has Total Workload Of 3
+						Routing Station S2 Has Total Workload Of 4
+						Routing Station S3 Has Total Workload Of 3
+						Routing Station S4 Has Total Workload Of 2
+						Routing Station S5 Has Total Workload Of 6
+						Routing Station S6 Has Total Workload Of 3
+						Routing Station S7 Has Total Workload Of 5
+						Routing Station S8 Has Total Workload Of 1
+						Routing Station S9 Has Total Workload Of 2
+
+% % % % % % % % ROUTING STATION S3 Coming Online - Initializing Conveyors % % % % % % % %
+
+
+% % % % % % % % ROUTING STATION S7 Coming Online - Initializing Conveyors % % % % % % % %
+
+			Routing Station S7: Input conveyor set to conveyor number C6
+
+
+% % % % % % % % ROUTING STATION S8 Coming Online - Initializing Conveyors % % % % % % % %
+
+			Routing Station S8: Input conveyor set to conveyor number C7
+
+			Routing Station S8: Output conveyor set to conveyor number C8
+
+
+% % % % % % % % ROUTING STATION S9 Coming Online - Initializing Conveyors % % % % % % % %
+
+			Routing Station S9: Input conveyor set to conveyor number C8
+
+			Routing Station S9: Output conveyor set to conveyor number C9
+
+
+% % % % % % % % ROUTING STATION S6 Coming Online - Initializing Conveyors % % % % % % % %
+
+			Routing Station S6: Input conveyor set to conveyor number C5
+
+			Routing Station S6: Output conveyor set to conveyor number C6
+
+Routing Station S6: Workload set. Station S6 has a total of 3 package groups to move.
+
+			Routing Station S3: Input conveyor set to conveyor number C2
+
+			Routing Station S3: Output conveyor set to conveyor number C3
+
+Routing Station S3: Workload set. Station S3 has a total of 3 package groups to move.
+
+
+						Routing Station S3: Now Online
+
+
+% % % % % % % % ROUTING STATION S5 Coming Online - Initializing Conveyors % % % % % % % %
+
+
+% % % % % % % % ROUTING STATION S4 Coming Online - Initializing Conveyors % % % % % % % %
+
+			Routing Station S4: Input conveyor set to conveyor number C3
+
+			Routing Station S4: Output conveyor set to conveyor number C4
+
+Routing Station S4: Workload set. Station S4 has a total of 2 package groups to move.
+
+
+						Routing Station S4: Now Online
+
+				Station S4 successfully acquired lock on: C3
+
+				Station S4 successfully acquired lock on: C4
+
+
+% % % % % % % % ROUTING STATION S0 Coming Online - Initializing Conveyors % % % % % % % %
+
+			Routing Station S0: Input conveyor set to conveyor number C9
+
+			Routing Station S0: Output conveyor set to conveyor number C0
+
+Routing Station S0: Workload set. Station S0 has a total of 2 package groups to move.
+
+
+						Routing Station S0: Now Online
+
+				Station S0 successfully acquired lock on: C9
+
+				Station S0 successfully acquired lock on: C0
+
+* * * * * * Routing Station S0: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+	Routing Station S0: successfully moves package into station on input Conveyor C9
+
+
+% % % % % % % % ROUTING STATION S1 Coming Online - Initializing Conveyors % % % % % % % %
+
+			Routing Station S1: Input conveyor set to conveyor number C0
+
+			Routing Station S1: Output conveyor set to conveyor number C1
+
+Routing Station S1: Workload set. Station S1 has a total of 3 package groups to move.
+
+
+						Routing Station S1: Now Online
+
+				Station S1 successfully acquired lock on: C0
+
+				Station S1 successfully acquired lock on: C1
+
+* * * * * * Routing Station S1: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+	Routing Station S1: successfully moves package into station on input Conveyor C0
+
+	Routing Station S1: successfully moves package out of station on output Conveyor C1
+
+
+% % % % % % % % ROUTING STATION S2 Coming Online - Initializing Conveyors % % % % % % % %
+
+			Routing Station S2: Input conveyor set to conveyor number C1
+
+			Routing Station S2: Output conveyor set to conveyor number C2
+
+Routing Station S2: Workload set. Station S2 has a total of 4 package groups to move.
+
+
+						Routing Station S2: Now Online
+
+				Station S2 successfully acquired lock on: C1
+
+				Station S2 successfully acquired lock on: C2
+
+				Routing Station S1 has 2 package groups left to move.
+
+	Routing Station S1: successfully moves package into station on input Conveyor C0
+
+	Routing Station S1: successfully moves package out of station on output Conveyor C1
+
+	Routing Station S0: successfully moves package out of station on output Conveyor C0
+
+			Routing Station S0 has 1 package group left to move.
+
+	Routing Station S0: successfully moves package into station on input Conveyor C9
+
+	Routing Station S0: successfully moves package out of station on output Conveyor C0
+
+				Routing Station S0 has 0 package groups left to move.
+
+* * * * * * Routing Station S4: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+	Routing Station S4: successfully moves package into station on input Conveyor C3
+
+			Routing Station S5: Input conveyor set to conveyor number C4
+
+			Routing Station S5: Output conveyor set to conveyor number C5
+
+				Station S3 successfully acquired lock on: C2
+
+
+						Routing Station S6: Now Online
+
+				Station S6 successfully acquired lock on: C5
+
+				Station S6 successfully acquired lock on: C6
+
+* * * * * * Routing Station S6: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+	Routing Station S6: successfully moves package into station on input Conveyor C5
+
+	Routing Station S6: successfully moves package out of station on output Conveyor C6
+
+				Routing Station S6 has 2 package groups left to move.
+
+	Routing Station S6: successfully moves package into station on input Conveyor C5
+
+	Routing Station S6: successfully moves package out of station on output Conveyor C6
+
+			Routing Station S6 has 1 package group left to move.
+
+	Routing Station S6: successfully moves package into station on input Conveyor C5
+
+	Routing Station S6: successfully moves package out of station on output Conveyor C6
+
+				Routing Station S6 has 0 package groups left to move.
+
+
+* * Station S6 Workload successfully completed. * * Station: S6 releasing/unlocking belts and going offline. * *
+
+Routing Station S9: Workload set. Station S9 has a total of 2 package groups to move.
+
+
+						Routing Station S9: Now Online
+
+				Station S9 successfully acquired lock on: C8
+
+				Station S9 successfully acquired lock on: C9
+
+* * * * * * Routing Station S9: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+Routing Station S8: Workload set. Station S8 has a total of 1 package groups to move.
+
+
+						Routing Station S8: Now Online
+
+				Station S8 successfully acquired lock on: C7
+
+				Station S8 successfully acquired lock on: C8
+
+* * * * * * Routing Station S8: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+	Routing Station S8: successfully moves package into station on input Conveyor C7
+
+	Routing Station S8: successfully moves package out of station on output Conveyor C8
+
+				Routing Station S8 has 0 package groups left to move.
+
+
+* * Station S8 Workload successfully completed. * * Station: S8 releasing/unlocking belts and going offline. * *
+
+			Routing Station S7: Output conveyor set to conveyor number C7
+
+	Routing Station S9: successfully moves package into station on input Conveyor C8
+
+	Routing Station S9: successfully moves package out of station on output Conveyor C9
+
+			Routing Station S9 has 1 package group left to move.
+
+	Routing Station S9: successfully moves package into station on input Conveyor C8
+
+	Routing Station S9: successfully moves package out of station on output Conveyor C9
+
+				Routing Station S9 has 0 package groups left to move.
+
+
+* * Station S9 Workload successfully completed. * * Station: S9 releasing/unlocking belts and going offline. * *
+
+* * * * * * * * * * ALL WORKLOADS COMPLETE * * * PACKAGE MANAGEMENT FACILITY SIMULATION ENDS * * * * * * * * * *
+				Station S3 successfully acquired lock on: C3
+
+* * * * * * Routing Station S3: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+	Routing Station S3: successfully moves package into station on input Conveyor C2
+
+	Routing Station S3: successfully moves package out of station on output Conveyor C3
+
+				Routing Station S3 has 2 package groups left to move.
+
+	Routing Station S3: successfully moves package into station on input Conveyor C2
+
+	Routing Station S3: successfully moves package out of station on output Conveyor C3
+
+			Routing Station S3 has 1 package group left to move.
+
+	Routing Station S3: successfully moves package into station on input Conveyor C2
+
+	Routing Station S3: successfully moves package out of station on output Conveyor C3
+
+				Routing Station S3 has 0 package groups left to move.
+
+
+* * Station S3 Workload successfully completed. * * Station: S3 releasing/unlocking belts and going offline. * *
+
+Routing Station S5: Workload set. Station S5 has a total of 6 package groups to move.
+
+
+						Routing Station S5: Now Online
+
+				Station S5 successfully acquired lock on: C4
+
+				Station S5 successfully acquired lock on: C5
+
+* * * * * * Routing Station S5: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+	Routing Station S5: successfully moves package into station on input Conveyor C4
+
+	Routing Station S5: successfully moves package out of station on output Conveyor C5
+
+				Routing Station S5 has 5 package groups left to move.
+
+	Routing Station S5: successfully moves package into station on input Conveyor C4
+
+	Routing Station S5: successfully moves package out of station on output Conveyor C5
+
+				Routing Station S5 has 4 package groups left to move.
+
+	Routing Station S5: successfully moves package into station on input Conveyor C4
+
+	Routing Station S5: successfully moves package out of station on output Conveyor C5
+
+				Routing Station S5 has 3 package groups left to move.
+
+	Routing Station S5: successfully moves package into station on input Conveyor C4
+
+	Routing Station S5: successfully moves package out of station on output Conveyor C5
+
+				Routing Station S5 has 2 package groups left to move.
+
+	Routing Station S5: successfully moves package into station on input Conveyor C4
+
+	Routing Station S5: successfully moves package out of station on output Conveyor C5
+
+			Routing Station S5 has 1 package group left to move.
+
+	Routing Station S5: successfully moves package into station on input Conveyor C4
+
+	Routing Station S5: successfully moves package out of station on output Conveyor C5
+
+				Routing Station S5 has 0 package groups left to move.
+
+
+* * Station S5 Workload successfully completed. * * Station: S5 releasing/unlocking belts and going offline. * *
+
+	Routing Station S4: successfully moves package out of station on output Conveyor C4
+
+
+* * Station S0 Workload successfully completed. * * Station: S0 releasing/unlocking belts and going offline. * *
+
+			Routing Station S1 has 1 package group left to move.
+
+	Routing Station S1: successfully moves package into station on input Conveyor C0
+
+	Routing Station S1: successfully moves package out of station on output Conveyor C1
+
+				Routing Station S1 has 0 package groups left to move.
+
+* * * * * * Routing Station S2: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+	Routing Station S2: successfully moves package into station on input Conveyor C1
+
+
+* * Station S1 Workload successfully completed. * * Station: S1 releasing/unlocking belts and going offline. * *
+
+			Routing Station S4 has 1 package group left to move.
+
+Routing Station S7: Workload set. Station S7 has a total of 5 package groups to move.
+
+
+						Routing Station S7: Now Online
+
+				Station S7 successfully acquired lock on: C6
+
+				Station S7 successfully acquired lock on: C7
+
+* * * * * * Routing Station S7: * * * * CURRENTLY HARD AT WORK MOVING PACKAGES * * * * * *
+
+
+	Routing Station S7: successfully moves package into station on input Conveyor C6
+
+	Routing Station S7: successfully moves package out of station on output Conveyor C7
+
+				Routing Station S7 has 4 package groups left to move.
+
+	Routing Station S7: successfully moves package into station on input Conveyor C6
+
+	Routing Station S7: successfully moves package out of station on output Conveyor C7
+
+				Routing Station S7 has 3 package groups left to move.
+
+	Routing Station S7: successfully moves package into station on input Conveyor C6
+
+	Routing Station S7: successfully moves package out of station on output Conveyor C7
+
+				Routing Station S7 has 2 package groups left to move.
+
+	Routing Station S7: successfully moves package into station on input Conveyor C6
+
+	Routing Station S7: successfully moves package out of station on output Conveyor C7
+
+			Routing Station S7 has 1 package group left to move.
+
+	Routing Station S7: successfully moves package into station on input Conveyor C6
+
+	Routing Station S7: successfully moves package out of station on output Conveyor C7
+
+				Routing Station S7 has 0 package groups left to move.
+
+
+* * Station S7 Workload successfully completed. * * Station: S7 releasing/unlocking belts and going offline. * *
+
+	Routing Station S4: successfully moves package into station on input Conveyor C3
+
+	Routing Station S4: successfully moves package out of station on output Conveyor C4
+
+				Routing Station S4 has 0 package groups left to move.
+
+
+* * Station S4 Workload successfully completed. * * Station: S4 releasing/unlocking belts and going offline. * *
+
+	Routing Station S2: successfully moves package out of station on output Conveyor C2
+
+				Routing Station S2 has 3 package groups left to move.
+
+	Routing Station S2: successfully moves package into station on input Conveyor C1
+
+	Routing Station S2: successfully moves package out of station on output Conveyor C2
+
+				Routing Station S2 has 2 package groups left to move.
+
+	Routing Station S2: successfully moves package into station on input Conveyor C1
+
+	Routing Station S2: successfully moves package out of station on output Conveyor C2
+
+			Routing Station S2 has 1 package group left to move.
+
+	Routing Station S2: successfully moves package into station on input Conveyor C1
+
+	Routing Station S2: successfully moves package out of station on output Conveyor C2
+
+				Routing Station S2 has 0 package groups left to move.
+
+
+* * Station S2 Workload successfully completed. * * Station: S2 releasing/unlocking belts and going offline. * *
+

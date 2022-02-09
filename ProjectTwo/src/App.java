@@ -9,9 +9,9 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.concurrent.*;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class App {
 
@@ -19,18 +19,6 @@ public class App {
 
 
     private static void initializeWorkStations(){
-
-        String[][] stationBelts = new String[5][2];
-        stationBelts[0][0] = "C0";
-        stationBelts[0][1] = "C4";
-        stationBelts[1][0] = "C0";
-        stationBelts[1][1] = "C1";
-        stationBelts[2][0] = "C1";
-        stationBelts[2][1] = "C2";
-        stationBelts[3][0] = "C2";
-        stationBelts[3][1] = "C3";
-        stationBelts[4][0] = "C3";
-        stationBelts[4][1] = "C4";
 
         int numOfStations;
 
@@ -58,8 +46,10 @@ public class App {
             //System.out.println("Workload for Station " + i + ": " + workloads[i]);
         }
 
+        Conveyors conveyorSystem = new Conveyors();
+
         for(int i = 0; i < numOfStations; i++){
-            stations[i] = new WorkStation(("S" + i), stationBelts[i][0], stationBelts[i][1], workloads[i]);
+            stations[i] = new WorkStation(("S" + i), ("C" + (i - 1 + numOfStations) % numOfStations), ("C" + i), workloads[i], conveyorSystem);
         }
 
         /*System.out.println("Stations Initialized: ");
@@ -69,9 +59,20 @@ public class App {
             System.out.println("Belt Two:" + stations[i].assignedConveyorTwo);
             System.out.println("Workload:" + stations[i].assignedWorkload);
         }*/
+
+
     }
 
     public static void main(String[] args){
+
+        PrintStream consoleOut = System.out;
+
+        try {
+            PrintStream output = new PrintStream("../ProjectTwo/src/simulation-output.txt");
+            System.setOut(output);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         initializeWorkStations();
 
@@ -85,8 +86,6 @@ public class App {
             System.out.println("\t\t\t\t\t\tRouting Station " + stations[i].workStation + " Has Total Workload Of " + stations[i].assignedWorkload);
             totalWorkload += stations[i].assignedWorkload;
         }
-
-        ReentrantLock lock = new ReentrantLock();
 
         //System.out.println("Total workload is: " + totalWorkload);
 
@@ -102,7 +101,15 @@ public class App {
         }
 
         threadPool.shutdownNow();
-        System.out.println("Packing Finished");
+        /*try {
+            threadPool.awaitTermination(5000, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        System.out.println("* * * * * * * * * * ALL WORKLOADS COMPLETE * * * PACKAGE MANAGEMENT FACILITY SIMULATION ENDS * * * * * * * * * *");
 
+        System.setOut(consoleOut);
+
+        System.out.println("You can find any console output pertaining to the simulation in the simulation-output.txt file in the /src/ folder");
     }
 }
