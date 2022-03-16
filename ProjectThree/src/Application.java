@@ -1,81 +1,120 @@
+/*
+Name: Zachary Russell
+Course: CNT 4714 Spring 2022
+Assignment title: Project Three - Two-Tier Client-Server Application Development With MySQL and JDBC
+Date: March 20, 2022
+Class: Section: 0001
+*/
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
-import java.util.Date;
-public class Application {
+import java.util.Properties;
+
+public class Application{
+
+    private static Connection connection;
 
     public Application() {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
-        //testConnection();
+        initializeConnection();
 
-        initializeGUI();
-
-    }
-
-    public static void initializeGUI(){
+        new GUI();
 
     }
 
-    public static void testConnection() throws SQLException, ClassNotFoundException{
+    public static void initializeConnection() throws SQLException, ClassNotFoundException{
+
         Class.forName("com.mysql.cj.jdbc.Driver");
 
-        Connection rootConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/project3", "root", "adminDB");
+    }
 
-        Statement firstStatement = rootConnection.createStatement();
+    public static String login(String user, String pass, String file) throws SQLException, IOException {
 
-        ResultSet stateResult = firstStatement.executeQuery("select * from riders");
+        Properties props = new Properties();
+        props.load(Application.class.getClassLoader().getResourceAsStream(file));
+        System.out.println(user);
+        System.out.println(props.getProperty("username"));
+        System.out.println(pass);
+        System.out.println(props.getProperty("password"));
+        if((user.equals(props.getProperty("username"))) && (pass.equals(props.getProperty("password")))){
 
-        while(stateResult.next()){
-            System.out.println(stateResult.getString("ridername") + "\t" + stateResult.getString("nationality"));
-            System.out.println();
+            System.out.println("Login credentials valid");
+            connection = DriverManager.getConnection(props.getProperty("databaseURL"), user, pass);
+
+            return props.getProperty("databaseURL");
         }
+        else{
+            return "error";
+        }
+    }
 
-        rootConnection.close();
+    public static String submitQuery(String query) throws SQLException, ClassNotFoundException{
+
+        String[] split = query.split(" ");
+
+        if(split[0].equalsIgnoreCase("select")){
+            System.out.println("Select statement");
+
+            String returnResult = null;
+
+            System.out.println(query);
+
+            try {
+                Statement firstStatement = connection.createStatement();
+                ResultSet stateResult = firstStatement.executeQuery(query);
+
+                int columns = stateResult.getMetaData().getColumnCount();
+                String[] columnNames = new String[columns];
+
+                for(int i = 1; i < columns; i++){
+                    columnNames[i] = stateResult.getMetaData().getColumnLabel(i);
+                    System.out.println(columnNames[i]);
+                    if(i == columns-1){
+                        returnResult += columnNames[i] + "\n";
+                    }
+                    else {
+                        returnResult += columnNames[i] + "\t";
+                    }
+                }
+
+                if(columns == 1){
+                    returnResult += columnNames[0] + "\n";
+                }
+
+                while(stateResult.next()){
+                    for(int i = 1; i < columns; i++){
+                        if(i == columns-1){
+                            returnResult += stateResult.getString(columnNames[i]) + "\n";
+                        }
+                        else {
+                            returnResult += stateResult.getString(columnNames[i]) + "\t";
+                        }
+                    }
+                    if(columns == 1){
+                        returnResult += stateResult.getString(columnNames[0]) + "\n";
+                    }
+                }
+
+                if(returnResult == null){
+                    return "No such items exist";
+                }
+
+                return returnResult;
+            }
+            catch(NullPointerException err){
+                return "-1";
+            }
+        }
+        else{
+            System.out.println("Update Statement");
+
+            Statement adminStatement = connection.createStatement();
+            adminStatement.executeUpdate(query);
+            return "1";
+        }
     }
 }
-
-
-
-// Very basic JDBC example showing loading of JDBC driver, establishing connection
-// creating a statement, executing a simple SQL query, and displaying the results.
-// uses an explicit loading of the driver
-/*public class SimpleJDBC {
-  public static void main(String[] args)  throws SQLException, ClassNotFoundException {
-            //dump out some heading details
-        System.out.println("Output from SimpleJDBC:  Using an explicit driver load.");
-        java.util.Date date = new java.util.Date();
-        System.out.println(date);  System.out.println();
-        // Load the JDBC driver
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        System.out.println("Driver loaded");
-
-        // Create a connection object and establish a connection to the database- using all parameters
-        // Note: some older MacOS versions will require the useTimeZone and serverTimezone parameters.  These are not required on Big Sur or later.
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bikedb?useTimezone=true&serverTimezone=UTC", "root", "rootMAC1$");
-        System.out.println("Database connected");
-        //print meta data from connection details
-        DatabaseMetaData dbMetaData = connection.getMetaData();
-        System.out.println("JDBC Driver name " + dbMetaData.getDriverName() );
-        System.out.println("JDBC Driver version " + dbMetaData.getDriverVersion());
-        System.out.println("Driver Major version " +dbMetaData.getDriverMajorVersion());
-        System.out.println("Driver Minor version " +dbMetaData.getDriverMinorVersion() );
-        System.out.println();
-        // Create a statement object
-        Statement statement = connection.createStatement();
-        // Execute a query using the statement
-        ResultSet resultSet = statement.executeQuery ("select bikename,cost,mileage from bikes");
-        // Iterate through the result set that was returned and print the results
-        System.out.println("Results of the Query: . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n");
-        while (resultSet.next()) {
-            System.out.println(resultSet.getString("bikename") + "         \t" + resultSet.getString("cost") + "         \t" + resultSet.getString("mileage"));
-            //the following print statement works exactly the same
-            //System.out.println(resultSet.getString(1) + "         \t" +
-            //  resultSet.getString(2) + "         \t" + resultSet.getString(3));
-            System.out.println();
-            System.out.println();
-        }
-            // Close the connection object
-      connection.close();
-  }
-}*/
