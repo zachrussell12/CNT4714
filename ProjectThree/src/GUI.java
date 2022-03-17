@@ -7,10 +7,12 @@ Class: Section: 0001
 */
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Vector;
 
 public class GUI extends JFrame{
 
@@ -30,6 +32,8 @@ public class GUI extends JFrame{
         window.setLocation(500,50);
 
         window.setLayout(new FlowLayout());
+
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JLabel enterQuery = new JLabel("Enter Query: ");
 
@@ -124,15 +128,15 @@ public class GUI extends JFrame{
 
         Box bottomSection = Box.createVerticalBox();
 
-        JTextArea resultWindow = new JTextArea(30, 60);
-        JScrollPane scrollableResult = new JScrollPane(resultWindow, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        final JTable[] resultWindow = {new JTable()};
+        final JScrollPane[] scrollableResult = {new JScrollPane(resultWindow[0], ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER)};
         JButton clearResult = new JButton("Clear Query Result");
         clearResult.setBackground(Color.MAGENTA);
         clearResult.setForeground(Color.black);
         clearResult.setBorderPainted(false);
 
         bottomSection.add(new JLabel("SQL Query Result: "));
-        bottomSection.add(scrollableResult);
+        bottomSection.add(scrollableResult[0]);
         bottomSection.add(clearResult);
 
         window.add(topSection);
@@ -153,18 +157,49 @@ public class GUI extends JFrame{
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    String result = Application.submitQuery(queryField.getText());
-                    if(result == "-1"){
-                        connectionStatus.setText("You must establish a connection before submitting a query");
-                    }
-                    else if(result == "1"){
-                        System.out.println("Update created successfully");
+                    String[] split = queryField.getText().split(" ");
+                    if(Application.getConnection()) {
+
+                        if (split[0].equalsIgnoreCase("select")) {
+                            ResultObject result = Application.submitQuery(queryField.getText());
+                            if (result == null) {
+                                //
+                            } else {
+                                System.out.println("Successfully got a result");
+
+                                DefaultTableModel model = new DefaultTableModel();
+                                resultWindow[0].setForeground(Color.black);
+                                resultWindow[0].setBackground(Color.white);
+                                resultWindow[0].setGridColor(Color.black);
+                                resultWindow[0].setModel(model);
+                                resultWindow[0].getTableHeader().setOpaque(false);
+                                resultWindow[0].getTableHeader().setBackground(Color.LIGHT_GRAY);
+
+                                for (int i = 1; i < result.columnTitles.length; i++) {
+                                    model.addColumn(result.columnTitles[i]);
+                                }
+
+                                for (int i = 0; i < result.rowData.length; i++) {
+                                    Vector<Object> rows = new Vector<Object>();
+                                    for (int j = 1; j < result.columnTitles.length; j++) {
+                                        rows.add(result.rowData[i][j]);
+                                    }
+                                    model.addRow(rows);
+                                }
+
+                            }
+                        } else {
+                            Application.submitUpdate(queryField.getText());
+                        }
                     }
                     else{
-                        resultWindow.setText(result);
+                        connectionStatus.setText("You must establish a connection before submitting a query");
                     }
                 } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                    System.out.println("SQL syntax problem");
+                    JOptionPane.showMessageDialog( null,
+                            throwables.getMessage(), "Database error",
+                            JOptionPane.ERROR_MESSAGE );
                 } catch (ClassNotFoundException classNotFoundException) {
                     classNotFoundException.printStackTrace();
                 }
@@ -264,7 +299,7 @@ public class GUI extends JFrame{
         clearResult.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                resultWindow.setText("");
+                resultWindow[0].setModel(new DefaultTableModel());
             }
 
             @Override

@@ -14,6 +14,7 @@ import java.util.Properties;
 public class Application{
 
     private static Connection connection;
+    private static boolean connectionStatus = false;
 
     public Application() {
     }
@@ -45,6 +46,8 @@ public class Application{
             System.out.println("Login credentials valid");
             connection = DriverManager.getConnection(props.getProperty("databaseURL"), user, pass);
 
+            connectionStatus = true;
+
             return props.getProperty("databaseURL");
         }
         else{
@@ -52,69 +55,59 @@ public class Application{
         }
     }
 
-    public static String submitQuery(String query) throws SQLException, ClassNotFoundException{
-
-        String[] split = query.split(" ");
-
-        if(split[0].equalsIgnoreCase("select")){
-            System.out.println("Select statement");
-
-            String returnResult = null;
-
-            System.out.println(query);
+    public static ResultObject submitQuery(String query) throws SQLException, ClassNotFoundException{
 
             try {
-                Statement firstStatement = connection.createStatement();
+                Statement firstStatement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 ResultSet stateResult = firstStatement.executeQuery(query);
 
                 int columns = stateResult.getMetaData().getColumnCount();
-                String[] columnNames = new String[columns];
+                stateResult.last();
+                int rows = stateResult.getRow();
+                stateResult.beforeFirst();
 
-                for(int i = 1; i < columns; i++){
+                System.out.println(columns);
+                System.out.println(rows);
+                String[][] resultRows = new String[rows][columns+1];
+                String[] columnNames = new String[columns+1];
+
+                for (int i = 1; i <=columns; i++) {
                     columnNames[i] = stateResult.getMetaData().getColumnLabel(i);
                     System.out.println(columnNames[i]);
-                    if(i == columns-1){
-                        returnResult += columnNames[i] + "\n";
-                    }
-                    else {
-                        returnResult += columnNames[i] + "\t";
-                    }
                 }
 
-                if(columns == 1){
-                    returnResult += columnNames[0] + "\n";
-                }
+                int count = 0;
 
-                while(stateResult.next()){
-                    for(int i = 1; i < columns; i++){
-                        if(i == columns-1){
-                            returnResult += stateResult.getString(columnNames[i]) + "\n";
+                while (stateResult.next()){
+                        for (int i = 1; i <=columns; i++) {
+                                resultRows[count][i] = stateResult.getString(columnNames[i]);
+                                //System.out.println(resultRows[count][i] + "-");
                         }
-                        else {
-                            returnResult += stateResult.getString(columnNames[i]) + "\t";
-                        }
-                    }
-                    if(columns == 1){
-                        returnResult += stateResult.getString(columnNames[0]) + "\n";
+                    count++;
+                }
+
+                ResultObject result = new ResultObject(columnNames, resultRows, rows, columns);
+
+                for(int j = 0; j < rows; j++) {
+                    for (int i = 1; i <=columns; i++) {
+                        System.out.println(result.rowData[j][i]);
                     }
                 }
 
-                if(returnResult == null){
-                    return "No such items exist";
-                }
-
-                return returnResult;
+                return result;
             }
             catch(NullPointerException err){
-                return "-1";
+                return null;
             }
         }
-        else{
-            System.out.println("Update Statement");
 
-            Statement adminStatement = connection.createStatement();
-            adminStatement.executeUpdate(query);
-            return "1";
-        }
+    public static void submitUpdate(String query) throws SQLException {
+
+        Statement firstStatement = connection.createStatement();
+        firstStatement.executeUpdate(query);
+    }
+
+    public static boolean getConnection() throws SQLException {
+        return connectionStatus;
     }
 }
