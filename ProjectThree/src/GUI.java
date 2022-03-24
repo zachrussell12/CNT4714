@@ -11,7 +11,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Properties;
 import java.util.Vector;
 
 public class GUI extends JFrame{
@@ -187,9 +188,13 @@ public class GUI extends JFrame{
                                     model.addRow(rows);
                                 }
 
+                                updateOperations("query");
+
                             }
                         } else {
                             Application.submitUpdate(queryField.getText());
+
+                            updateOperations("update");
                         }
                     }
                     else{
@@ -323,5 +328,63 @@ public class GUI extends JFrame{
             }
         });
 
+    }
+
+    private void updateOperations(String val){
+        if(val.equals("update")){
+            try {
+                Properties props = new Properties();
+                props.load(Application.class.getClassLoader().getResourceAsStream("operations.properties"));
+
+                Connection operate = DriverManager.getConnection(props.getProperty("databaseURL"), props.getProperty("username"), props.getProperty("password"));
+
+                Statement firstStatement = operate.createStatement();
+                ResultSet stateResult = firstStatement.executeQuery("select * from operationscount");
+
+                stateResult.next();
+                int countTwo = Integer.parseInt(stateResult.getString("num_queries"));
+                int count = Integer.parseInt(stateResult.getString("num_updates"));
+
+                int afterUpdate = count + 1;
+
+                Statement secondStatement = operate.createStatement();
+
+                secondStatement.executeUpdate("update operationscount set num_queries = '" + countTwo + "' where num_queries = " + countTwo);
+                secondStatement.executeUpdate("update operationscount set num_updates = '" + afterUpdate + "' where num_queries = " + count);
+            }
+             catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+        else if(val.equals("query")){
+            try {
+                Properties props = new Properties();
+                props.load(Application.class.getClassLoader().getResourceAsStream("operations.properties"));
+
+                Connection operate = DriverManager.getConnection(props.getProperty("databaseURL"), props.getProperty("username"), props.getProperty("password"));
+
+                Statement firstStatement = operate.createStatement();
+                ResultSet stateResult = firstStatement.executeQuery("select * from operationscount");
+
+                stateResult.next();
+                int countTwo = Integer.parseInt(stateResult.getString("num_queries"));
+                int count = Integer.parseInt(stateResult.getString("num_updates"));
+
+                int afterUpdate = countTwo + 1;
+
+                Statement secondStatement = operate.createStatement();
+
+                secondStatement.executeUpdate("update operationscount set num_queries = '" + afterUpdate + "' where num_queries = " + countTwo);
+                secondStatement.executeUpdate("update operationscount set num_updates = '" + count + "' where num_queries = " + count);
+            }
+            catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

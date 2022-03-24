@@ -37,10 +37,10 @@ public class Application{
 
         Properties props = new Properties();
         props.load(Application.class.getClassLoader().getResourceAsStream(file));
-        System.out.println(user);
-        System.out.println(props.getProperty("username"));
-        System.out.println(pass);
-        System.out.println(props.getProperty("password"));
+        //System.out.println(user);
+        //System.out.println(props.getProperty("username"));
+        //System.out.println(pass);
+        //System.out.println(props.getProperty("password"));
         if((user.equals(props.getProperty("username"))) && (pass.equals(props.getProperty("password")))){
 
             System.out.println("Login credentials valid");
