@@ -38,7 +38,7 @@ public class GUI extends JFrame{
 
         JLabel enterQuery = new JLabel("Enter Query: ");
 
-        queryField = new JTextArea("select * from riders", 3, 30);
+        queryField = new JTextArea("select * from riders", 8, 30);
         queryField.setWrapStyleWord(true);
         queryField.setLineWrap(true);
 
@@ -194,7 +194,9 @@ public class GUI extends JFrame{
                         } else {
                             Application.submitUpdate(queryField.getText());
 
-                            updateOperations("update");
+                            if(!split[0].equalsIgnoreCase("use")){
+                                updateOperations("update");
+                            }
                         }
                     }
                     else{
