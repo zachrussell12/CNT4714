@@ -1,0 +1,44 @@
+<web-app>
+	<!-- General description of your Web application -->
+	<display-name>
+		Root User Interactions	
+	</display-name>
+	<description>
+		This is the Web application in which we
+		demonstrate our JSP and Servlet examples.
+	</description>
+	<!-- Servlet definitions and mappings  -->
+    <servlet>
+        <description>
+            Root Level Servlet
+        </description>
+        <servlet-name>alpha</servlet-name>
+        <servlet-class>rootLevel</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>alpha</servlet-name>
+        <url-pattern>/rootLevel</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <description>
+            Client Level Servlet
+        </description>
+        <servlet-name>beta</servlet-name>
+        <servlet-class>clientLevel</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>beta</servlet-name>
+        <url-pattern>/client</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <description>
+            Root JSP
+        </description>
+        <servlet-name>charlie</servlet-name>
+        <jsp-file>/Project4/root.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>charlie</servlet-name>
+        <url-pattern>/root</url-pattern>
+    </servlet-mapping>
+</web-app>
