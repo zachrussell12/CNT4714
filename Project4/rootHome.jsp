@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html"%>
+    
+<!--
+Name: Zachary Russell
+Course: CNT 4714 Spring 2022
+Assignment title: Project Four: Developing A Three-Tier Distributed Web-Based Application
+Date: April 21, 2022
+Class: Section: 0001
+-->
 
 <!DOCTYPE html>
 
 <html lang="en">
     <head>
-        <title>Root User for Project 4</title>
+        <title>System Login</title>
         <meta charset="UTF-8">
         <style>
             body{background-color: #202124; font-family: monospace; color: white;}

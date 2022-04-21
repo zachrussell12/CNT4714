@@ -10,7 +10,7 @@
 	<!-- Servlet definitions and mappings  -->
     <servlet>
         <description>
-            Root Level Servlet
+            Enterprise Database System
         </description>
         <servlet-name>alpha</servlet-name>
         <servlet-class>rootLevel</servlet-class>
@@ -21,18 +21,7 @@
     </servlet-mapping>
     <servlet>
         <description>
-            Client Level Servlet
-        </description>
-        <servlet-name>beta</servlet-name>
-        <servlet-class>clientLevel</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>beta</servlet-name>
-        <url-pattern>/client</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <description>
-            Root JSP
+            Enterprise Database System
         </description>
         <servlet-name>charlie</servlet-name>
         <jsp-file>/Project4/root.jsp</jsp-file>
