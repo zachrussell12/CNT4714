@@ -14,7 +14,7 @@
     </head>
     <body>
         
-        <form action="./root.jsp" method="get">
+        <form action="./rootLevel" method="post">
             <p>
                 <label>Please Login:</label><br>
                 <label>Username: 

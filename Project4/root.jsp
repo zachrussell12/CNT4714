@@ -5,8 +5,11 @@
 
 <%
    String firstName = (String) session.getAttribute("firstName");
-
    String message = (String) session.getAttribute("message");
+
+   String user = (String) session.getAttribute("user");
+   String pass = (String) session.getAttribute("pass");
+
    if (message == null) message = " ";
 
    ResourceBundle resource = ResourceBundle.getBundle("root");
@@ -17,8 +20,21 @@
    String prop2u  = resource2.getString("username");
    String prop2p  = resource2.getString("password");
 
-   if( ( !request.getParameter("username").equals(prop1u) || !request.getParameter("password").equals(prop1p) ) && ( !request.getParameter("username").equals(prop2u) || !request.getParameter("password").equals(prop2p) ) ){
-        response.sendRedirect("./rootHome.jsp");
+   if(user == null){
+       if(request.getParameter("username") != null){
+           if( ( !request.getParameter("username").equals(prop1u) && !request.getParameter("password").equals(prop1p) ) && ( !request.getParameter("username").equals(prop2u) && !request.getParameter("password").equals(prop2p) ) ){
+                response.sendRedirect("./rootHome.jsp");
+           }
+           user = request.getParameter("username");
+       }
+       else{
+            response.sendRedirect("./rootHome.jsp");
+       }
+   }
+   else{
+        if( ( !user.equals(prop1u) && !pass.equals(prop1p) ) && ( !user.equals(prop2u) && !pass.equals(prop2p) ) ){
+             response.sendRedirect("./rootHome.jsp");
+        }
    }
 
 %>
@@ -38,7 +54,7 @@
             </section>
             <hr></hr>
             <section class="topSection">
-                <h4>You are connected to the Project 4 Enterprise System as a <span class="inLine">${param.username}-level</span> user.</h4>
+                <h4>You are connected to the Project 4 Enterprise System as a <span class="inLine">${user}-level</span> user.</h4>
                 <h4>Please enter any valid SQL query or update below:</h4>
             </section>
             <section class="queryEntry">
@@ -48,7 +64,6 @@
                         <input class="queryButton" name="exec" type="submit" value="Execute Command" style="background-color: #4ac77c"/>
                         <input class="queryButton" name="reset" type="reset" value="Reset" style="background-color: #eb4d4d"/>
                         <input class="queryButton" name="clear" type="submit" value="Clear Results" style="background-color: #ebd04d"/>
-                        <p name="login" value=${param.username}}></p>
                     </section>
                 </form>
             </section>
